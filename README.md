@@ -9,7 +9,7 @@
 본 프로젝트 *"베프"*는 장애인이 마주하는 다양한 장애 요인을 제거하고, 보다 자유롭고 편리한 생활을 지원하기 위한 베리어 프리 운동 추천 서비스를 제공합니다. <br>
 이를 통해 사용자에게 개인 맞춤형 운동 프로그램과 정보 접근성을 높여, 장애를 넘어 더 나은 일상으로 나아가는 데 기여하고자 합니다.
 
-![image](https://github.com/user-attachments/assets/d79526d3-cf5e-4a43-a142-0fbdef4162c2)
+![image](https://github.com/user-attachments/assets/da4600a1-b62f-4b9c-82d1-2879d237bba8)
 
 ## Preview
 
@@ -74,13 +74,10 @@
 <img src="https://img.shields.io/badge/Filezilla-BF0000?style=flat&logo=filezilla&logoColor=white"/></a> 
 
 ## Architecture
-![아키텍처 1](https://github.com/user-attachments/assets/aeb1bb27-b83e-46b0-acad-1c70e444980a)
-
-## CV
-![아키텍처 2](https://github.com/user-attachments/assets/22d30544-4f5c-4e00-b6da-29b250f5527d)
+![image](https://github.com/user-attachments/assets/0c73905a-57b8-48bd-a394-d501642ed4fe)
 
 ## RAG
-![아키텍처 3](https://github.com/user-attachments/assets/46a176ac-377f-446d-ad2d-18cd3e30027e)
+![image](https://github.com/user-attachments/assets/9e740f04-a78f-4eba-9332-580bfe86a988)
 
 <br />
 
