@@ -1,37 +1,32 @@
 pipeline {
     agent any
-    tools {
-        gradle 'gradle-8.10.2'
-    }
     stages {
         stage('Build') {
             steps {
                 sh 'rm -rf KDT-Frontend KDT-Frontend@tmp'
-                sh 'gradle clean build'
-            }
-        }
-        stage('Check and Free Port') {
-            steps {
-                echo 'Checking if port 8080 is in use...'
-                script {
-                    def portInUse = sh(script: "netstat -tuln | grep ':8080 '", returnStatus: true)
-                    if (portInUse == 0) {
-                        echo 'Port 8080 is in use. Attempting to free it...'
-                        sh(script: 'sudo fuser -k 8080/tcp || true') // 오류를 무시하고 실행
-                        echo 'Port 8080 freed successfully.'
-                    } else {
-                        echo 'Port 8080 is not in use. Proceeding with deployment...'
+                dir("./frontend") {
+                    nodejs(nodeJSInstallationName: 'NodeJS') {
+                        // CI=false 추가 및 npm install에 --legacy-peer-deps 옵션 추가
+                        sh 'npm install --legacy-peer-deps && CI=false npm run build'
                     }
                 }
+            }
+        }
+        stage('Compression') {
+            steps {
+                sh '''
+                rm -rf /var/lib/jenkins/workspace/BestFriend_KDT-Frontend_jenkins/frontend/node_modules
+                sudo tar -cvf /var/lib/jenkins/workspace/BestFriend_KDT-Frontend_jenkins/frontend/build.tar build
+                '''
             }
         }
         stage('Deploy') {
             steps {
                 sshagent(credentials: ['ec2-user']) {
                     sh '''
-                    ssh -o StrictHostKeyChecking=no ubuntu@3.34.100.57 "pwd"
-                    scp /var/lib/jenkins/workspace/BestFriend_back-end-bf_jenkins/build/libs/back-end-bf-0.0.1-SNAPSHOT.war ubuntu@3.34.100.57:/home/ubuntu
-                    ssh -t ubuntu@3.34.100.57 ./deploy.sh
+                    ssh -o StrictHostKeyChecking=no ubuntu@3.35.110.201 "pwd"
+                    scp /var/lib/jenkins/workspace/BestFriend_KDT-Frontend_jenkins/frontend/build.tar ubuntu@3.35.110.201:/home/ubuntu
+                    ssh -t ubuntu@3.35.110.201 ./deploy.sh
                     '''
                 }
             }
